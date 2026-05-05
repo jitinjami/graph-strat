@@ -17,8 +17,8 @@ from src.training.split import get_all_folds
 from src.training.trainer import load_data, build_model, _train_loop, evaluate, get_device
 from src.utils.logging import console
 
-_METRIC_KEYS   = ["accuracy", "auroc", "macro_f1", "weighted_f1", "balanced_accuracy", "auprc"]
-_METRIC_LABELS = ["Accuracy", "AUROC", "Macro-F1", "Wtd-F1", "Bal-Acc", "AUPRC"]
+_METRIC_KEYS   = ["accuracy"]
+_METRIC_LABELS = ["Accuracy"]
 
 
 @hydra.main(config_path="conf", config_name="config", version_base="1.3")
@@ -84,12 +84,7 @@ def main(cfg: DictConfig) -> None:
             f"  Best epoch: [yellow]{best_epoch}[/yellow]   Time: {elapsed:.1f}s"
         )
         console.print(
-            f"  Acc: [bold green]{metrics['accuracy']:.4f}[/bold green]   "
-            f"AUROC: {metrics['auroc']:.4f}   "
-            f"Macro-F1: {metrics['macro_f1']:.4f}   "
-            f"Wtd-F1: {metrics['weighted_f1']:.4f}   "
-            f"Bal-Acc: {metrics['balanced_accuracy']:.4f}   "
-            f"AUPRC: {metrics['auprc']:.4f}"
+            f"  Acc: [bold green]{metrics['accuracy']:.4f}[/bold green]"
         )
 
     # ── Summary table ─────────────────────────────────────────────────────

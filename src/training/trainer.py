@@ -9,13 +9,7 @@ from typing import Any
 import torch
 import torch.nn.functional as F
 from omegaconf import DictConfig
-from torchmetrics.classification import (
-    MulticlassAccuracy,
-    MulticlassAUROC,
-    MulticlassAveragePrecision,
-    MulticlassF1Score,
-    MulticlassRecall,
-)
+from torchmetrics.classification import MulticlassAccuracy
 from tqdm import tqdm
 
 from src.training.models.appnp import APPNPModel
@@ -138,26 +132,16 @@ def _compute_val_loss(model, data, val_mask) -> float:
 
 @torch.no_grad()
 def evaluate(model, data, mask) -> dict:
-    """Return classification metrics on nodes selected by mask.
-
-    Keys: accuracy, auroc, macro_f1, weighted_f1, balanced_accuracy, auprc.
-    """
     model.eval()
     out    = model(data.x, data.edge_index)
     logits = out[mask]
     y_true = data.y[mask]
-    probs  = F.softmax(logits, dim=-1)
     preds  = logits.argmax(dim=-1)
     C      = logits.size(-1)
     dev    = logits.device
 
     return {
-        "accuracy":          float(MulticlassAccuracy(C).to(dev)(preds, y_true)),
-        "auroc":             float(MulticlassAUROC(C, average="macro").to(dev)(probs, y_true)),
-        "macro_f1":          float(MulticlassF1Score(C, average="macro").to(dev)(preds, y_true)),
-        "weighted_f1":       float(MulticlassF1Score(C, average="weighted").to(dev)(preds, y_true)),
-        "balanced_accuracy": float(MulticlassRecall(C, average="macro").to(dev)(preds, y_true)),
-        "auprc":             float(MulticlassAveragePrecision(C, average="macro").to(dev)(probs, y_true)),
+        "accuracy": float(MulticlassAccuracy(C).to(dev)(preds, y_true)),
     }
 
 

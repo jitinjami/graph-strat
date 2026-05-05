@@ -135,5 +135,3 @@ python train.py training.max_epochs=500 training.lr=0.005
 ├── data/                         # dataset downloads (gitignored)
 └── pyproject.toml
 ```
-# graph-start
-# graph-strat

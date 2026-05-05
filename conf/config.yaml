@@ -2,6 +2,8 @@ defaults:
   - dataset: cora
   - model: gcn
   - training: hypA
+  - override hydra/job_logging: disabled
+  - override hydra/hydra_logging: disabled
   - _self_
 
 paths:
@@ -14,4 +16,5 @@ split:
 
 hydra:
   run:
-    dir: outputs/${dataset.name}_${model.name}_${split.strategy}
+    dir: .
+  output_subdir: null
