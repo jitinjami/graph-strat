@@ -1,0 +1,4 @@
+name: gprgnn
+K: 10
+alpha: 0.1
+Init: PPR

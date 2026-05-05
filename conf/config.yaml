@@ -1,0 +1,17 @@
+defaults:
+  - dataset: cora
+  - model: gcn
+  - training: hypA
+  - _self_
+
+paths:
+  data_dir: data/pyg
+
+split:
+  strategy: class_wise   # class_wise | random | hpstrat
+  k: 4                   # number of folds (>= 2)
+  seed: 42
+
+hydra:
+  run:
+    dir: outputs/${dataset.name}_${model.name}_${split.strategy}

@@ -1,0 +1,50 @@
+[project]
+name = "graph-strat"
+version = "0.1.0"
+description = "Homophily-aware stratification for transductive node classification"
+requires-python = ">3.11, <3.13"
+dependencies = [
+    "torch==2.3.0",
+    "torch-geometric",
+    "torch-scatter",
+    "torch-sparse",
+    "torch-cluster",
+    "torch-spline-conv",
+    "rich",
+    "tqdm",
+    "hydra-core>=1.3",
+    "scikit-learn",
+    "torchmetrics",
+    "omegaconf>=2.3",
+]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+# --------------------------------------------------------------------------- #
+# uv: conditional PyTorch source (CPU on macOS/Windows, CUDA 11.8 on Linux)  #
+# PyG sparse deps use HTML find-links pages (not PEP 503 indexes).           #
+# --------------------------------------------------------------------------- #
+
+[tool.uv]
+find-links = [
+  "https://data.pyg.org/whl/torch-2.3.0+cpu.html",
+  "https://data.pyg.org/whl/torch-2.3.0+cu118.html",
+]
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cpu", marker = "sys_platform != 'linux'" },
+  { index = "pytorch-cu118", marker = "sys_platform == 'linux'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu118"
+url = "https://download.pytorch.org/whl/cu118"
+explicit = true
