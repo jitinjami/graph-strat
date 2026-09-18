@@ -1,6 +1,10 @@
 # Not All Nodes Are Created Equal: Homophily-Aware Stratification for Stable GNN Evaluation
 
-Anonymous code submission for NeurIPS 2026.
+Accepted at the **Learning on Graphs (LoG) Conference 2026**.
+
+Pre-print: [arXiv:2609.19210](https://arxiv.org/abs/2609.19210). 
+
+The camera-ready version will be made available here once published.
 
 This repository provides the training code and split implementations accompanying the paper. It supports **transductive node classification** on graphs using three k-fold split strategies, including a novel homophily-aware variant called HpStrat.
 
